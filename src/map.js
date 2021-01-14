@@ -1,20 +1,18 @@
-const map = (elements, operation)=>{
-    if(operation == 'cube'){
-        return cube(elements);
-    }    
-    if(operation == 'identity'){
-        return identity(elements);
+const tail = require('./tail');
+
+const filterArray = (arr, utilityFunction, resultArray) => {
+    if(arr.length>0) {
+        let element = utilityFunction(arr[0]);
+        resultArray.push(element);
+        return filterArray(tail(arr), utilityFunction, resultArray);
     }
+    return resultArray;
 }
 
-function cube(elements){
-    return elements.map(ele=>{
-        return ele**3;
-    });
-}
-
-function identity(elements){
-    return elements;
+const map = (arr, utilityFunction) => {
+    let resultArray = [];
+    let filteredArray = filterArray(arr, utilityFunction, resultArray);
+    return filteredArray;
 }
 
 module.exports = map;
